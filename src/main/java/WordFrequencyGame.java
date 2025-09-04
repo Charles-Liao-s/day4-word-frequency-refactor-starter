@@ -40,32 +40,33 @@ public class WordFrequencyGame {
     }
 
     private List<Input> countFrequency(String[] words) {
-        List<String> frequencies = new ArrayList<>();
-        for (String s : words) {
-            frequencies.add(s);
-        }
-        //get the map for the next step of sizing the same word
-        Map<String, List<String>> map1 = new HashMap<>();
-        for (String input1 : frequencies) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map1.containsKey(input1)) {
-                ArrayList arr = new ArrayList<>();
-                arr.add(input1);
-                map1.put(input1, arr);
-            } else {
-                map1.get(input1).add(input1);
-            }
-        }
-
-
-        Map<String, List<String>> map = map1;
-
+        Map<String, List<String>> map = groupSameWords(words);
         List<Input> list = new ArrayList<>();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             Input input = new Input(entry.getKey(), entry.getValue().size());
             list.add(input);
         }
         return list;
+    }
+
+    private static Map<String, List<String>> groupSameWords(String[] words) {
+        List<String> frequencies = new ArrayList<>();
+        for (String s : words) {
+            frequencies.add(s);
+        }
+        //get the map for the next step of sizing the same word
+        Map<String, List<String>> map = new HashMap<>();
+        for (String input1 : frequencies) {
+//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
+            if (!map.containsKey(input1)) {
+                ArrayList arr = new ArrayList<>();
+                arr.add(input1);
+                map.put(input1, arr);
+            } else {
+                map.get(input1).add(input1);
+            }
+        }
+        return map;
     }
 
 
