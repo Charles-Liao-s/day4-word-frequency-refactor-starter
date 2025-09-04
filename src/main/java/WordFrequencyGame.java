@@ -40,14 +40,14 @@ public class WordFrequencyGame {
     }
 
     private List<Input> countFrequency(String[] words) {
-        Map<String, List<String>> map = groupSameWords(words);
-        List<Input> list = new ArrayList<>();
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-            Input input = new Input(entry.getKey(), entry.getValue().size());
-            list.add(input);
-        }
-        return list;
+        return java.util.Arrays.stream(words)
+                .collect(java.util.stream.Collectors.groupingBy(word -> word))
+                .entrySet()
+                .stream()
+                .map(entry -> new Input(entry.getKey(), entry.getValue().size()))
+                .collect(java.util.stream.Collectors.toList());
     }
+
 
     private static Map<String, List<String>> groupSameWords(String[] words) {
         return java.util.Arrays.stream(words)
