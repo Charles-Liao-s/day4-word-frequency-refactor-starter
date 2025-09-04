@@ -3,18 +3,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.io.CharArrayWriter;
-
-import java.time.LocalDateTime;
 
 public class WordFrequencyGame {
 
-    public static final String REGEX = "\\s+";
+    public static final String ANY_SPACE_SEPARATOR = "\\s+";
 
     public String getResult(String inputStr) {
 
 
-        if (inputStr.split(REGEX).length == 1) {
+        if (inputStr.split(ANY_SPACE_SEPARATOR).length == 1) {
             return inputStr + " 1";
 
         } else {
@@ -22,24 +19,9 @@ public class WordFrequencyGame {
             try {
 
                 //split the input string with 1 to n pieces of spaces
-                String[] words = inputStr.split(REGEX);
+                String[] words = inputStr.split(ANY_SPACE_SEPARATOR);
 
-                List<Input> inputList = new ArrayList<>();
-                for (String s : words) {
-                    Input input = new Input(s, 1);
-                    inputList.add(input);
-
-                }
-
-                //get the map for the next step of sizing the same word
-                Map<String, List<Input>> map = getListMap(inputList);
-
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()) {
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
-                }
-                inputList = list;
+                List<Input> inputList = countFrequency(words);
 
                 inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
@@ -55,6 +37,26 @@ public class WordFrequencyGame {
                 return "Calculate Error";
             }
         }
+    }
+
+    private List<Input> countFrequency(String[] words) {
+        List<Input> inputList = new ArrayList<>();
+        for (String s : words) {
+            Input input = new Input(s, 1);
+            inputList.add(input);
+
+        }
+
+        //get the map for the next step of sizing the same word
+        Map<String, List<Input>> map = getListMap(inputList);
+
+        List<Input> list = new ArrayList<>();
+        for (Map.Entry<String, List<Input>> entry : map.entrySet()) {
+            Input input = new Input(entry.getKey(), entry.getValue().size());
+            list.add(input);
+        }
+        inputList = list;
+        return inputList;
     }
 
 
