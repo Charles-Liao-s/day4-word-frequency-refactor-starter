@@ -40,30 +40,28 @@ public class WordFrequencyGame {
     }
 
     private List<Input> countFrequency(String[] words) {
-        List<Input> frequencies = new ArrayList<>();
+        List<String> frequencies = new ArrayList<>();
         for (String s : words) {
-            Input input = new Input(s, 1);
-            frequencies.add(input);
-
+            frequencies.add(s);
         }
         //get the map for the next step of sizing the same word
-        Map<String, List<Input>> map1 = new HashMap<>();
-        for (Input input1 : frequencies) {
+        Map<String, List<String>> map1 = new HashMap<>();
+        for (String input1 : frequencies) {
 //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map1.containsKey(input1.getValue())) {
+            if (!map1.containsKey(input1)) {
                 ArrayList arr = new ArrayList<>();
                 arr.add(input1);
-                map1.put(input1.getValue(), arr);
+                map1.put(input1, arr);
             } else {
-                map1.get(input1.getValue()).add(input1);
+                map1.get(input1).add(input1);
             }
         }
 
 
-        Map<String, List<Input>> map = map1;
+        Map<String, List<String>> map = map1;
 
         List<Input> list = new ArrayList<>();
-        for (Map.Entry<String, List<Input>> entry : map.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             Input input = new Input(entry.getKey(), entry.getValue().size());
             list.add(input);
         }
