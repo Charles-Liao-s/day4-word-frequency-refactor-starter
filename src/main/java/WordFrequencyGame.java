@@ -38,12 +38,4 @@ public class WordFrequencyGame {
                 .map(entry -> new Input(entry.getKey(), entry.getValue().size()))
                 .collect(java.util.stream.Collectors.toList());
     }
-
-    private static Map<String, List<String>> groupSameWords(String[] words) {
-        return java.util.Arrays.stream(words)
-                .collect(java.util.stream.Collectors.groupingBy(word -> word));
-    }
-
-
-
 }
